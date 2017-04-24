@@ -26,7 +26,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-
+        if (user == null) throw new UsernameNotFoundException("There is no user named " + username);
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).forEach(grantedAuthorities::add);
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);

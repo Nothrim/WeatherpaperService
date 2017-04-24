@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Created by Notrim on 24.04.2017.
@@ -28,9 +29,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests().antMatchers("/login").permitAll().anyRequest()
+//                .fullyAuthenticated().and().formLogin().loginPage("/login")
+//                .failureUrl("/login?error").and().logout()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
+//                .exceptionHandling().accessDeniedPage("/access?error");
         http
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/registration","/resources/static/**").permitAll()
+                .antMatchers("/resources/**", "/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -41,10 +47,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
-    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
