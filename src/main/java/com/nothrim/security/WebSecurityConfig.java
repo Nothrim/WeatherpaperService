@@ -3,6 +3,7 @@ package com.nothrim.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -17,6 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  */
 @Configuration
 @EnableWebSecurity
+@Order(2)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -29,22 +31,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests().antMatchers("/login").permitAll().anyRequest()
-//                .fullyAuthenticated().and().formLogin().loginPage("/login")
-//                .failureUrl("/login?error").and().logout()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
-//                .exceptionHandling().accessDeniedPage("/access?error");
         http
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/registration").permitAll()
+                .antMatchers("/js/**", "/css/**", "/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+                .and().logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
+                .exceptionHandling().accessDeniedPage("/access?error");
     }
 
 

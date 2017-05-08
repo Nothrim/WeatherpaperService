@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+          href="../../css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"
+          href="../../css/common.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="content">
+        <!--/*@thymesVar id="error" type="java"*/-->
+
+        <!--/*@thymesVar id="userForm" type="java"*/-->
+        <form method="POST" th:action="@{/registration}" th:object="${userForm}" class="form-signin">
+            <h2 class="form-signin-heading">Create your account</h2>
+
+            <div th:class="form-group+  |${#fields.hasErrors('username')?' has-error' : ''}|">
+                <input type="text" class="form-control" placeholder="Username"
+                       th:field="*{username}"/>
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+            </div>
+
+            <div th:class="form-group+  |${#fields.hasErrors('password')?' has-error' : ''}|">
+                <input type="password" th:field="*{password}" class="form-control" placeholder="Password"/>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+            </div>
+            <div th:class="form-group+  |${#fields.hasErrors('passwordConfirm')?' has-error' : ''}|">
+                <input type="password" th:field="*{passwordConfirm}" class="form-control"
+                       placeholder="Confirm your password"/>
+                <p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></p>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

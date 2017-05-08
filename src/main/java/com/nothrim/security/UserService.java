@@ -7,5 +7,6 @@ import com.nothrim.database.models.security.User;
  */
 public interface UserService {
     public void save(User user);
+    public void create(User user);
     public User findByUsername(String username);
 }

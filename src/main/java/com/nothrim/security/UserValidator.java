@@ -19,6 +19,7 @@ public class UserValidator implements org.springframework.validation.Validator {
         return User.class.equals(aClass);
     }
 
+
     @Override
     public void validate(Object o, Errors errors) {
         User user = (User) o;

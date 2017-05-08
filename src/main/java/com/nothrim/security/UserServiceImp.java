@@ -24,8 +24,15 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void save(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public void create(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(new HashSet<>(roleRepository.findAll()));
+        user.setLatitude(0);
+        user.setLongitude(0);
         userRepository.save(user);
     }
 
